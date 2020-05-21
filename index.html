@@ -176,9 +176,9 @@
 <h1>Introduction</h1>
 <p><img alt="Debug Scanner" src="img/title.png"/></p>
 <p>DebugScanner is really only of use to those involved with the GeyserMC project.  It is to be used with a Debug world and
-will put all players into spectate mode and teleport them at a configured interface to each block in succession with the
+will put the player into spectate mode and teleport them at a configured interface to each block in succession with the
 block number shown in the action bar. It will also write the full state of the block along with the shown number to a
-json file.</p>
+blocks.yml file.</p>
 <p>It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.</p>
 <p>This allows comparing block states in Minecraft Java Edition, Minecraft Bedrock Edition and Minecraft Education Edition.</p>
@@ -207,7 +207,7 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <p>Use the following command to start:</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p>/debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]</p>
+<p>/debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]</p>
 </div>
 </li>
 <li>
@@ -223,7 +223,7 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <div class="md-source-date">
 <small>
     
-      Last update: <span class="timeago" datetime="1590045692000" locale="en"></span>
+      Last update: <span class="timeago" datetime="1590103975000" locale="en"></span>
 </small>
 </div>
 </article>
