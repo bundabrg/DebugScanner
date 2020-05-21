@@ -52,8 +52,8 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 
 4. Use the following command to start:
 
-    ```
-    /debugscanner start [interval]
+    ``` 
+    /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]
     ```
 
 5. To stop early use the following command:
