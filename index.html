@@ -182,6 +182,7 @@ json file.</p>
 <p>It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.</p>
 <p>This allows comparing block states in Minecraft Java Edition, Minecraft Bedrock Edition and Minecraft Education Edition.</p>
+<p><a href="https://www.youtube.com/watch?v=-p5zkeR5nZA">Video</a></p>
 <h2 id="how-to-use">How to Use<a class="headerlink" href="#how-to-use" title="Permanent link">¶</a></h2>
 <ol>
 <li>
@@ -190,8 +191,11 @@ be Debug.</p>
 </li>
 <li>
 <p>Issue the following command:</p>
-<div class="highlight"><pre><span></span><code>/gamerule randomTickSpeed 0
-</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+</div>
+<p>/gamerule randomTickSpeed 0
+!!!</p>
 </li>
 <li>
 <p>Import the world into spigot by copying the save file and renaming to world. You will also need to rename level_old.dat to level.dat
@@ -202,13 +206,19 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 </li>
 <li>
 <p>Use the following command to start:</p>
-<div class="highlight"><pre><span></span><code>/debugscanner start [interval]
-</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+</div>
+<p>/debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]
+!!!</p>
 </li>
 <li>
 <p>To stop early use the following command:</p>
-<div class="highlight"><pre><span></span><code>/debugscanner stop
-</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+</div>
+<p>/debugscanner stop
+!!!</p>
 </li>
 </ol>
 <p>It's best to use as screen recorder, then save the recording along with the accompanying blocks.json file.</p>
@@ -216,7 +226,7 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <div class="md-source-date">
 <small>
     
-      Last update: <span class="timeago" datetime="1590042192000" locale="en"></span>
+      Last update: <span class="timeago" datetime="1590044575000" locale="en"></span>
 </small>
 </div>
 </article>
