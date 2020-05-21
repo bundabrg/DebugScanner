@@ -160,7 +160,7 @@ jobs:
           done
           tag_name="${GITHUB_REF##*/}"
 
-          docker login -u gitlab+deploy-token-2 -p ${DEPLOY_TOKEN} https://registry.worldguard.com.au
+          docker login -u gitlab+deploy-token-3 -p ${DEPLOY_TOKEN} https://registry.worldguard.com.au
           cat > config.yml << EOF
           common:
             spigot:
