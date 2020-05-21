@@ -21,8 +21,7 @@ be Debug.
 2. Issue the following command:
 
     !!! example
-    /gamerule randomTickSpeed 0
-    !!!
+        /gamerule randomTickSpeed 0
    
 2. Import the world into spigot by copying the save file and renaming to world. You will also need to rename level_old.dat to level.dat
 or copy a level.dat from a non debug world (note if you do this you'll need to set the gamerule again on first load).
@@ -32,14 +31,12 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 4. Use the following command to start:
 
     !!! example
-    /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]
-    !!!
+        /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]
 
 5. To stop early use the following command:
 
     !!! example
-    /debugscanner stop
-    !!!
+        /debugscanner stop
 
 It's best to use as screen recorder, then save the recording along with the accompanying blocks.json file.
 
