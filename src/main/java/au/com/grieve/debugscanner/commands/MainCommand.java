@@ -25,15 +25,36 @@ import au.com.grieve.debugscanner.DebugScanner;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 @Command("debugscanner|ds")
 public class MainCommand extends BukkitCommand {
 
-    @Arg("start @int(switch=interval|i,min=1,default=2) @float(switch=pitch|p,default=45) @float(switch=yaw|y,default=0) @int(switch=start,min=1,default=1)")
-    public void onStart(CommandSender sender, Integer ticks, Float pitch, Float yaw, Integer start) {
+    @Arg({
+            "start",
+            "@int(switch=interval|i,min=1,default=10)",
+            "@float(switch=pitch|p,default=45)",
+            "@float(switch=yaw|y,default=0)",
+            "@int(switch=start,min=1,default=1)",
+            "@float(switch=x_offset|x,default=0.0)",
+            "@float(switch=y_offset|y,default=0.5)",
+            "@float(switch=z_offset|z,default=-2.0)",
+            "@player(mode=online,default=%self)"
+    })
+    public void onStart(
+            CommandSender sender,
+            Integer ticks,
+            Float pitch,
+            Float yaw,
+            Integer start,
+            Float x_offset,
+            Float y_offset,
+            Float z_offset,
+            Player player
+    ) {
         try {
-            DebugScanner.getInstance().start(start, ticks, pitch, yaw);
+            DebugScanner.getInstance().start(player, start, ticks, pitch, yaw, x_offset, y_offset, z_offset);
         } catch (DebugScanner.DebugScannerException e) {
             sender.spigot().sendMessage(
                     new ComponentBuilder(e.getMessage()).color(ChatColor.RED).create()

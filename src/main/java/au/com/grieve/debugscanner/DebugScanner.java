@@ -20,6 +20,7 @@ package au.com.grieve.debugscanner;
 
 import au.com.grieve.bcf.BukkitCommandManager;
 import au.com.grieve.debugscanner.commands.MainCommand;
+import au.com.grieve.debugscanner.utils.Utils;
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -57,20 +58,20 @@ public final class DebugScanner extends JavaPlugin {
     }
 
     // Start operation in a thread
-    public void start(int start, int period, float pitch, float yaw) throws DebugScannerException {
+    public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset) throws DebugScannerException {
         if (runnable != null) {
             stop();
         }
 
-        // Set everyone into spectator mode
-        for (Player player : getServer().getOnlinePlayers()) {
-            player.setGameMode(GameMode.SPECTATOR);
-        }
+        player.setGameMode(GameMode.CREATIVE); // Workaround for Bedrock
+//        player.setGameMode(GameMode.SPECTATOR);
+
 
         runnable = new BukkitRunnable() {
             final double y = 70.0;
             double x = ((double) (start / 106) * 2) + 1.0;
             double z = ((double) (start - ((start / 106) * 106)) * 2) + 1.0;
+            int direction = 0;
             int upto = start;
 
             @Override
@@ -85,7 +86,6 @@ public final class DebugScanner extends JavaPlugin {
                     // Are we done?
                     if (location.getBlock().getType() == Material.AIR) {
                         cancel();
-                        return;
                     }
                 }
 
@@ -94,16 +94,23 @@ public final class DebugScanner extends JavaPlugin {
                         .append(location.getBlock().getBlockData().getAsString()).color(ChatColor.WHITE)
                         .create();
 
-                Location l = new Location(getServer().getWorld("world"), x, y, z, yaw, pitch)
-                        .add(new Vector(0.5, 0.5, -1.5));
-                for (Player player : getServer().getOnlinePlayers()) {
-                    player.teleport(l);
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
-                }
+                Location l = new Location(getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (90 * direction), pitch);
 
-                z += 2.0;
-                upto++;
+                // Rotate around direction
+                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), 90 * direction));
+
+                player.teleport(l);
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
+
+                if (direction < 3) {
+                    direction++;
+                } else {
+                    direction = 0;
+                    z += 2.0;
+                    upto++;
+                }
             }
+
         };
 
         runnable.runTaskTimer(DebugScanner.getInstance(), 0, period);

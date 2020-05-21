@@ -1,9 +1,9 @@
 ![Debug Scanner](img/title.png)
 
 DebugScanner is really only of use to those involved with the GeyserMC project.  It is to be used with a Debug world and
-will put all players into spectate mode and teleport them at a configured interface to each block in succession with the
+will put the player into spectate mode and teleport them at a configured interface to each block in succession with the
 block number shown in the action bar. It will also write the full state of the block along with the shown number to a
-json file.
+blocks.yml file.
 
 It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.
@@ -31,7 +31,7 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 4. Use the following command to start:
 
     !!! example
-        /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}]
+        /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]
 
 5. To stop early use the following command:
 
