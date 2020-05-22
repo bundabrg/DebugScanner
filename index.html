@@ -176,12 +176,11 @@
 <h1>Introduction</h1>
 <p><img alt="Debug Scanner" src="img/title.png"/></p>
 <p>DebugScanner is really only of use to those involved with the GeyserMC project.  It is to be used with a Debug world and
-will put the player into spectate mode and teleport them at a configured interface to each block in succession with the
-block number shown in the action bar. It will also write the full state of the block along with the shown number to a
-blocks.yml file.</p>
+provides tools to allow testing block states between various editions of Minecraft.</p>
+<p>Auto scan will will put the player into creative mode and teleport them at a configured interface to each block in succession with the
+block number shown in the action bar. </p>
 <p>It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.</p>
-<p>This allows comparing block states in Minecraft Java Edition, Minecraft Bedrock Edition and Minecraft Education Edition.</p>
 <p><a href="https://www.youtube.com/watch?v=-p5zkeR5nZA">Video</a></p>
 <h2 id="how-to-use">How to Use<a class="headerlink" href="#how-to-use" title="Permanent link">¶</a></h2>
 <ol>
@@ -204,26 +203,25 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <p>Start up the server and join the world</p>
 </li>
 <li>
-<p>Use the following command to start:</p>
+<p>Use for the Auto Scannner the following command to start:</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p>/debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]</p>
+<p>/debugscanner auto start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]</p>
 </div>
 </li>
 <li>
 <p>To stop early use the following command:</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p>/debugscanner stop</p>
+<p>/debugscanner auto stop [player]</p>
 </div>
 </li>
 </ol>
-<p>It's best to use as screen recorder, then save the recording along with the accompanying blocks.json file.</p>
 <hr/>
 <div class="md-source-date">
 <small>
     
-      Last update: <span class="timeago" datetime="1590103975000" locale="en"></span>
+      Last update: <span class="timeago" datetime="1590105854000" locale="en"></span>
 </small>
 </div>
 </article>
