@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
 public class MainCommand extends BukkitCommand {
 
     @Arg({
-            "start",
+            "auto start",
             "@int(switch=interval|i,min=1,default=10)",
             "@float(switch=pitch|p,default=45)",
             "@float(switch=yaw|y,default=0)",
@@ -42,7 +42,7 @@ public class MainCommand extends BukkitCommand {
             "@float(switch=z_offset|z,default=-2.0)",
             "@player(mode=online,default=%self)"
     })
-    public void onStart(
+    public void onAutoStart(
             CommandSender sender,
             Integer ticks,
             Float pitch,
@@ -53,29 +53,17 @@ public class MainCommand extends BukkitCommand {
             Float z_offset,
             Player player
     ) {
-        try {
-            DebugScanner.getInstance().start(player, start, ticks, pitch, yaw, x_offset, y_offset, z_offset);
-        } catch (DebugScanner.DebugScannerException e) {
-            sender.spigot().sendMessage(
-                    new ComponentBuilder(e.getMessage()).color(ChatColor.RED).create()
-            );
-        }
+        DebugScanner.getInstance().start(player, start, ticks, pitch, yaw, x_offset, y_offset, z_offset);
         // Don't send any response since we don't want to obscure the screen with text
 //        sender.spigot().sendMessage(
 //                new ComponentBuilder("Started").color(ChatColor.YELLOW).create()
 //        );
     }
 
-    @Arg("stop")
-    public void onStop(CommandSender sender) {
-        try {
-            DebugScanner.getInstance().stop();
-        } catch (DebugScanner.DebugScannerException e) {
-            sender.spigot().sendMessage(
-                    new ComponentBuilder(e.getMessage()).color(ChatColor.RED).create()
-            );
-            return;
-        }
+    @Arg("auto stop @player(mode=online,default=%self)")
+    public void onAutoStop(CommandSender sender, Player player) {
+        DebugScanner.getInstance().stop(player);
+
         sender.spigot().sendMessage(
                 new ComponentBuilder("Successfully Stopped").color(ChatColor.YELLOW).create()
         );

@@ -20,19 +20,12 @@ package au.com.grieve.debugscanner;
 
 import au.com.grieve.bcf.BukkitCommandManager;
 import au.com.grieve.debugscanner.commands.MainCommand;
-import au.com.grieve.debugscanner.utils.Utils;
 import lombok.Getter;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class DebugScanner extends JavaPlugin {
 
@@ -42,7 +35,8 @@ public final class DebugScanner extends JavaPlugin {
     @Getter
     private BukkitCommandManager bcf;
 
-    private BukkitRunnable runnable;
+    @Getter
+    private final Map<Player, Scanner> scanners = new HashMap<>();
 
     public DebugScanner() {
         instance = this;
@@ -58,77 +52,25 @@ public final class DebugScanner extends JavaPlugin {
     }
 
     // Start operation in a thread
-    public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset) throws DebugScannerException {
-        if (runnable != null) {
-            stop();
+    public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset) {
+        if (scanners.containsKey(player)) {
+            Scanner scanner = scanners.remove(player);
+            scanner.stop();
         }
 
-        player.setGameMode(GameMode.CREATIVE); // Workaround for Bedrock
-//        player.setGameMode(GameMode.SPECTATOR);
-
-
-        runnable = new BukkitRunnable() {
-            final double y = 70.0;
-            double x = ((double) (start / 106) * 2) + 1.0;
-            double z = ((double) (start - ((start / 106) * 106)) * 2) + 1.0;
-            int direction = 0;
-            int upto = start;
-
-            @Override
-            public void run() {
-                Location location = new Location(getServer().getWorld("world"), x, y, z);
-
-                if (location.getBlock().getType() == Material.AIR) {
-                    x += 2.0;
-                    z = 1.0;
-                    location = new Location(getServer().getWorld("world"), x, y, z);
-
-                    // Are we done?
-                    if (location.getBlock().getType() == Material.AIR) {
-                        cancel();
-                    }
-                }
-
-                BaseComponent[] blockData = new ComponentBuilder(String.valueOf(upto)).color(ChatColor.RED)
-                        .append(": ").color(ChatColor.YELLOW)
-                        .append(location.getBlock().getBlockData().getAsString()).color(ChatColor.WHITE)
-                        .create();
-
-                Location l = new Location(getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (90 * direction), pitch);
-
-                // Rotate around direction
-                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), 90 * direction));
-
-                player.teleport(l);
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
-
-                if (direction < 3) {
-                    direction++;
-                } else {
-                    direction = 0;
-                    z += 2.0;
-                    upto++;
-                }
-            }
-
-        };
-
-        runnable.runTaskTimer(DebugScanner.getInstance(), 0, period);
+        Scanner scanner = new Scanner(this, player, start, period, pitch, yaw, x_offset, y_offset, z_offset);
+        scanners.put(player, scanner);
+        scanner.start();
     }
 
-    // Stop any existing operations
-    public void stop() throws DebugScannerException {
-        if (runnable == null) {
-            throw new DebugScannerException("Operation is already stopped");
+    // Stop existing operations
+    public void stop(Player player) {
+        if (!scanners.containsKey(player)) {
+            return;
         }
 
-        runnable.cancel();
-        runnable = null;
-    }
-
-    public static class DebugScannerException extends Exception {
-        public DebugScannerException(String message) {
-            super(message);
-        }
+        Scanner scanner = scanners.remove(player);
+        scanner.stop();
+        scanner.deregister();
     }
 }

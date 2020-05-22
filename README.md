@@ -23,16 +23,13 @@
 ---
 
 DebugScanner is really only of use to those involved with the GeyserMC project.  It is to be used with a Debug world and
-will put the player into spectate mode and teleport them at a configured interface to each block in succession with the
-block number shown in the action bar. It will also write the full state of the block along with the shown number to a
-yml file.
+provides tools to allow testing block states between various editions of Minecraft.
+
+Auto scan will will put the player into creative mode and teleport them at a configured interface to each block in succession with the
+block number shown in the action bar. 
 
 It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.
-
-This allows comparing block states in Minecraft Java Edition, Minecraft Bedrock Edition and Minecraft Education Edition.
-
-
 
 ## How to Use
 
@@ -50,17 +47,16 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 
 3. Start up the server and join the world
 
-4. Use the following command to start:
+4. To enable Auto Scan Use the following command to start:
 
     ``` 
-    /debugscanner start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]
+    /debugscanner auto start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]
     ```
 
-5. To stop early use the following command:
+5. To stop the auto scanner early use the following command:
 
     ```
-    /debugscanner stop
+    /debugscanner auto stop [player]
     ```
 
-It's best to use as screen recorder, then save the recording along with the accompanying blocks.json file.
 
