@@ -137,6 +137,11 @@
     How to Use
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#detector-mode">
+    Detector Mode
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -166,6 +171,11 @@
     How to Use
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#detector-mode">
+    Detector Mode
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -179,9 +189,10 @@
 provides tools to allow testing block states between various editions of Minecraft.</p>
 <p>Auto scan will will put the player into creative mode and teleport them at a configured interface to each block in succession with the
 block number shown in the action bar. </p>
+<p>Detector Mode will show the block a player is looking at (from the debug blocks) which allows a flyaround for any issues.</p>
 <p>It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.</p>
-<p><a href="https://www.youtube.com/watch?v=-p5zkeR5nZA">Video</a></p>
+<p><a href="https://www.youtube.com/watch?v=G1b7M5fv0Dk">Video</a></p>
 <h2 id="how-to-use">How to Use<a class="headerlink" href="#how-to-use" title="Permanent link">¶</a></h2>
 <ol>
 <li>
@@ -217,11 +228,25 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 </div>
 </li>
 </ol>
+<h2 id="detector-mode">Detector Mode<a class="headerlink" href="#detector-mode" title="Permanent link">¶</a></h2>
+<p>Detector mode will show what debug block a player is looking at.</p>
+<p>To start:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">!!! example</span>
+<span class="err">    /debugscanner detect start</span>
+</code></pre></div>
+</td></tr></table>
+<p>To stop:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">!!! example</span>
+<span class="err">    /debugscanner detect stop</span>
+</code></pre></div>
+</td></tr></table>
 <hr/>
 <div class="md-source-date">
 <small>
     
-      Last update: <span class="timeago" datetime="1590105854000" locale="en"></span>
+      Last update: <span class="timeago" datetime="1590108342000" locale="en"></span>
 </small>
 </div>
 </article>
