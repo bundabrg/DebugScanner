@@ -69,4 +69,22 @@ public class MainCommand extends BukkitCommand {
         );
     }
 
+    @Arg("detect start @player(mode=online,default=%self)")
+    public void onDetectStart(CommandSender sender, Player player) {
+        DebugScanner.getInstance().startDetect(player);
+
+        sender.spigot().sendMessage(
+                new ComponentBuilder("Successfully Started Detect").color(ChatColor.YELLOW).create()
+        );
+    }
+
+    @Arg("detect stop @player(mode=online,default=%self)")
+    public void onDetectStop(CommandSender sender, Player player) {
+        DebugScanner.getInstance().stopDetect(player);
+
+        sender.spigot().sendMessage(
+                new ComponentBuilder("Successfully Stopped Detect").color(ChatColor.YELLOW).create()
+        );
+    }
+
 }

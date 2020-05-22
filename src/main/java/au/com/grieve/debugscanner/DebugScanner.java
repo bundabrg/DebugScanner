@@ -22,12 +22,15 @@ import au.com.grieve.bcf.BukkitCommandManager;
 import au.com.grieve.debugscanner.commands.MainCommand;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public final class DebugScanner extends JavaPlugin {
+public final class DebugScanner extends JavaPlugin implements Listener {
 
     @Getter
     private static DebugScanner instance;
@@ -37,6 +40,9 @@ public final class DebugScanner extends JavaPlugin {
 
     @Getter
     private final Map<Player, Scanner> scanners = new HashMap<>();
+
+    @Getter
+    private final Map<Player, Detector> detectors = new HashMap<>();
 
     public DebugScanner() {
         instance = this;
@@ -49,13 +55,15 @@ public final class DebugScanner extends JavaPlugin {
 
         // Register Commands
         bcf.registerCommand(MainCommand.class);
+
+        // Register Listeners
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     // Start operation in a thread
     public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset) {
         if (scanners.containsKey(player)) {
-            Scanner scanner = scanners.remove(player);
-            scanner.stop();
+            stop(player);
         }
 
         Scanner scanner = new Scanner(this, player, start, period, pitch, yaw, x_offset, y_offset, z_offset);
@@ -71,6 +79,40 @@ public final class DebugScanner extends JavaPlugin {
 
         Scanner scanner = scanners.remove(player);
         scanner.stop();
-        scanner.deregister();
     }
+
+    // Start Detect mode for player
+    public void startDetect(Player player) {
+        if (detectors.containsKey(player)) {
+            stopDetect(player);
+        }
+
+        Detector detector = new Detector(this, player);
+        detectors.put(player, detector);
+        detector.start();
+    }
+
+    // Stop Detect mode for player
+    public void stopDetect(Player player) {
+        if (!detectors.containsKey(player)) {
+            return;
+        }
+
+        Detector detector = detectors.remove(player);
+        detector.stop();
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        if (scanners.containsKey(event.getPlayer())) {
+            Scanner scanner = scanners.remove(event.getPlayer());
+            scanner.stop();
+        }
+
+        if (detectors.containsKey(event.getPlayer())) {
+            Detector detector = detectors.remove(event.getPlayer());
+            detector.stop();
+        }
+    }
+
 }

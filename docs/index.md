@@ -6,10 +6,12 @@ provides tools to allow testing block states between various editions of Minecra
 Auto scan will will put the player into creative mode and teleport them at a configured interface to each block in succession with the
 block number shown in the action bar. 
 
+Detector Mode will show the block a player is looking at (from the debug blocks) which allows a flyaround for any issues.
+
 It will start with the block at (1 70 1) and will continue till it cannot find any more blocks. The first block is
 always assumed to be air.
 
-[Video](https://www.youtube.com/watch?v=-p5zkeR5nZA)
+[Video](https://www.youtube.com/watch?v=G1b7M5fv0Dk)
 
 
 ## How to Use
@@ -38,3 +40,18 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
         /debugscanner auto stop [player]
 
 
+
+## Detector Mode
+
+Detector mode will show what debug block a player is looking at.
+
+To start:
+
+    !!! example
+        /debugscanner detect start
+        
+To stop:
+
+    !!! example
+        /debugscanner detect stop
+        

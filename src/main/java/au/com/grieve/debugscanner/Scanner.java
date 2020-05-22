@@ -28,15 +28,11 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 @Getter
-public class Scanner implements Listener {
+public class Scanner {
     private final Player player;
     private final DebugScanner plugin;
     private final int start;
@@ -58,8 +54,6 @@ public class Scanner implements Listener {
         this.x_offset = x_offset;
         this.y_offset = y_offset;
         this.z_offset = z_offset;
-
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     public void start() {
@@ -121,20 +115,6 @@ public class Scanner implements Listener {
         if (runnable != null) {
             runnable.cancel();
         }
-    }
-
-    public void deregister() {
-        HandlerList.unregisterAll(this);
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        if (player != event.getPlayer()) {
-            return;
-        }
-
-        stop();
-        deregister();
-        plugin.getScanners().remove(player);
+        runnable = null;
     }
 }
