@@ -29,21 +29,25 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 
 3. Start up the server and join the world
 
-4. Use for the Auto Scannner the following command to start:
+### Auto Scanner
+
+The auto scanner will teleport the player to every block in the debug world in sequence, showing the block state and block number
+in an actionbar message
+
+To start:
 
     !!! example
-        /debugscanner auto start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]
+        /debugscanner auto start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] 
+            [-direction {north|south|east|west|all}] [player]
 
-5. To stop early use the following command:
+To stop:
 
     !!! example
         /debugscanner auto stop [player]
 
-
-
 ## Detector Mode
 
-Detector mode will show what debug block a player is looking at.
+Detector mode will show what debug block a player is looking at as well as the block number in an action bar message.
 
 To start:
 
@@ -55,3 +59,15 @@ To stop:
     !!! example
         /debugscanner detect stop
         
+## Watcher Mode
+
+Watcher mode is a workaround for Bedrock not having proper spectator mode. It will make a player view everything another
+player is doing and make both players invisible to each other.  Used with Scan mode or Detect mode will allow simultaneous
+viewing of blocks by multiple players running different editions of minecraft.
+
+To start:
+
+    !!! example
+        /debugscanner watch {player to watch} [watching player]
+        
+To stop, press `sneak`.

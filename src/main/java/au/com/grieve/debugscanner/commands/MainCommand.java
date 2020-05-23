@@ -22,6 +22,7 @@ import au.com.grieve.bcf.BukkitCommand;
 import au.com.grieve.bcf.annotations.Arg;
 import au.com.grieve.bcf.annotations.Command;
 import au.com.grieve.debugscanner.DebugScanner;
+import au.com.grieve.debugscanner.Scanner;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.command.CommandSender;
@@ -40,6 +41,7 @@ public class MainCommand extends BukkitCommand {
             "@float(switch=x_offset|x,default=0.0)",
             "@float(switch=y_offset|y,default=0.5)",
             "@float(switch=z_offset|z,default=-2.0)",
+            "@string(switch=direction,options=north|south|east|west|all,default=north)",
             "@player(mode=online,default=%self)"
     })
     public void onAutoStart(
@@ -51,9 +53,10 @@ public class MainCommand extends BukkitCommand {
             Float x_offset,
             Float y_offset,
             Float z_offset,
+            String direction,
             Player player
     ) {
-        DebugScanner.getInstance().start(player, start, ticks, pitch, yaw, x_offset, y_offset, z_offset);
+        DebugScanner.getInstance().start(player, start, ticks, pitch, yaw, x_offset, y_offset, z_offset, Scanner.Direction.valueOf(direction.toUpperCase()));
         // Don't send any response since we don't want to obscure the screen with text
 //        sender.spigot().sendMessage(
 //                new ComponentBuilder("Started").color(ChatColor.YELLOW).create()
@@ -86,5 +89,15 @@ public class MainCommand extends BukkitCommand {
                 new ComponentBuilder("Successfully Stopped Detect").color(ChatColor.YELLOW).create()
         );
     }
+
+    @Arg("watch @player(mode=online) @player(mode=online,default=%self)")
+    public void onDetectStart(CommandSender sender, Player watchedPlayer, Player player) {
+        DebugScanner.getInstance().watch(player, watchedPlayer);
+
+        sender.spigot().sendMessage(
+                new ComponentBuilder("Successfully Watching").color(ChatColor.YELLOW).create()
+        );
+    }
+
 
 }

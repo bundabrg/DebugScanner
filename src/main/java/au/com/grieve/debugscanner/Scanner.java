@@ -42,9 +42,10 @@ public class Scanner {
     private final float x_offset;
     private final float y_offset;
     private final float z_offset;
+    private final Direction direction;
     private BukkitRunnable runnable;
 
-    public Scanner(DebugScanner plugin, Player player, int start, int interval, float pitch, float yaw, float x_offset, float y_offset, float z_offset) {
+    public Scanner(DebugScanner plugin, Player player, int start, int interval, float pitch, float yaw, float x_offset, float y_offset, float z_offset, Direction direction) {
         this.plugin = plugin;
         this.player = player;
         this.start = start;
@@ -54,6 +55,7 @@ public class Scanner {
         this.x_offset = x_offset;
         this.y_offset = y_offset;
         this.z_offset = z_offset;
+        this.direction = direction;
     }
 
     public void start() {
@@ -65,7 +67,7 @@ public class Scanner {
             final double y = 70.0;
             double x = ((double) (start / 106) * 2) + 1.0;
             double z = ((double) (start - ((start / 106) * 106)) * 2) + 1.0;
-            int direction = 0;
+            int direction = Scanner.this.direction==Direction.ALL?0:Scanner.this.direction.ordinal();
             int upto = start;
 
             @Override
@@ -85,21 +87,26 @@ public class Scanner {
 
                 BaseComponent[] blockData = new ComponentBuilder(String.valueOf(upto)).color(ChatColor.RED)
                         .append(": ").color(ChatColor.YELLOW)
-                        .append(location.getBlock().getBlockData().getAsString()).color(ChatColor.WHITE)
+                        .append(location.getBlock().getBlockData().getAsString()).color(ChatColor.DARK_GRAY)
                         .create();
 
-                Location l = new Location(plugin.getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (90 * direction), pitch);
+                Location l = new Location(plugin.getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (-90 * direction), pitch);
 
-                // Rotate around direction
-                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), 90 * direction));
+                // Rotate around direction if required
+                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), -90 * direction));
 
                 player.teleport(l);
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
 
-                if (direction < 3) {
-                    direction++;
+                if (Scanner.this.direction == Direction.ALL) {
+                    if (direction < 3) {
+                        direction++;
+                    } else {
+                        direction = 0;
+                        z += 2.0;
+                        upto++;
+                    }
                 } else {
-                    direction = 0;
                     z += 2.0;
                     upto++;
                 }
@@ -116,5 +123,13 @@ public class Scanner {
             runnable.cancel();
         }
         runnable = null;
+    }
+
+    public enum Direction {
+        NORTH,
+        EAST,
+        SOUTH,
+        WEST,
+        ALL
     }
 }
