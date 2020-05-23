@@ -44,6 +44,9 @@ public final class DebugScanner extends JavaPlugin implements Listener {
     @Getter
     private final Map<Player, Detector> detectors = new HashMap<>();
 
+    @Getter
+    private final Map<Player, Watcher> watchedPlayers = new HashMap<>();
+
     public DebugScanner() {
         instance = this;
     }
@@ -61,12 +64,12 @@ public final class DebugScanner extends JavaPlugin implements Listener {
     }
 
     // Start operation in a thread
-    public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset) {
+    public void start(Player player, int start, int period, float pitch, float yaw, float x_offset, float y_offset, float z_offset, Scanner.Direction direction) {
         if (scanners.containsKey(player)) {
             stop(player);
         }
 
-        Scanner scanner = new Scanner(this, player, start, period, pitch, yaw, x_offset, y_offset, z_offset);
+        Scanner scanner = new Scanner(this, player, start, period, pitch, yaw, x_offset, y_offset, z_offset, direction);
         scanners.put(player, scanner);
         scanner.start();
     }
@@ -92,6 +95,20 @@ public final class DebugScanner extends JavaPlugin implements Listener {
         detector.start();
     }
 
+    // Start Watching
+    public void watch(Player player, Player watchedPlayer) {
+        Watcher watcher;
+        if (!watchedPlayers.containsKey(watchedPlayer)) {
+            watcher = new Watcher(this, watchedPlayer);
+            watchedPlayers.put(watchedPlayer, watcher);
+            watcher.start();
+        } else {
+            watcher = watchedPlayers.get(watchedPlayer);
+        }
+
+        watcher.addWatcher(player);
+    }
+
     // Stop Detect mode for player
     public void stopDetect(Player player) {
         if (!detectors.containsKey(player)) {
@@ -113,6 +130,19 @@ public final class DebugScanner extends JavaPlugin implements Listener {
             Detector detector = detectors.remove(event.getPlayer());
             detector.stop();
         }
+
+        for (Watcher watcher : watchedPlayers.values()) {
+            if (watcher.getWatchers().contains(event.getPlayer())) {
+                watcher.removeWatcher(event.getPlayer());
+            }
+        }
+        if (watchedPlayers.containsKey(event.getPlayer())) {
+            Watcher watcher = watchedPlayers.remove(event.getPlayer());
+            watcher.stop();
+        }
+
     }
+
+
 
 }

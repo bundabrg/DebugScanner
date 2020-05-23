@@ -69,7 +69,7 @@ public class Detector implements Listener {
 
         BaseComponent[] blockData = new ComponentBuilder(String.valueOf(blockNumber)).color(ChatColor.RED)
                 .append(": ").color(ChatColor.YELLOW)
-                .append(block.getBlockData().getAsString()).color(ChatColor.WHITE)
+                .append(block.getBlockData().getAsString()).color(ChatColor.DARK_GRAY)
                 .create();
 
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
