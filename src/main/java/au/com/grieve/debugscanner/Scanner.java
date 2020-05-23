@@ -90,10 +90,10 @@ public class Scanner {
                         .append(location.getBlock().getBlockData().getAsString()).color(ChatColor.DARK_GRAY)
                         .create();
 
-                Location l = new Location(plugin.getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (90 * direction), pitch);
+                Location l = new Location(plugin.getServer().getWorld("world"), x + 0.5, y + 0.5, z + 0.5, yaw - (-90 * direction), pitch);
 
                 // Rotate around direction if required
-                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), 90 * direction));
+                l.add(Utils.rotate(new Vector(x_offset, y_offset, z_offset), new Vector(0, 1, 0), -90 * direction));
 
                 player.teleport(l);
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, blockData);
@@ -125,7 +125,7 @@ public class Scanner {
         runnable = null;
     }
 
-    public static enum Direction {
+    public enum Direction {
         NORTH,
         EAST,
         SOUTH,
