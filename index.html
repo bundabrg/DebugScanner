@@ -136,10 +136,24 @@
 <a class="md-nav__link" href="#how-to-use">
     How to Use
   </a>
+<nav aria-label="How to Use" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#auto-scanner">
+    Auto Scanner
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#detector-mode">
     Detector Mode
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#watcher-mode">
+    Watcher Mode
   </a>
 </li>
 </ul>
@@ -170,10 +184,24 @@
 <a class="md-nav__link" href="#how-to-use">
     How to Use
   </a>
+<nav aria-label="How to Use" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#auto-scanner">
+    Auto Scanner
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#detector-mode">
     Detector Mode
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#watcher-mode">
+    Watcher Mode
   </a>
 </li>
 </ul>
@@ -213,23 +241,26 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <li>
 <p>Start up the server and join the world</p>
 </li>
-<li>
-<p>Use for the Auto Scannner the following command to start:</p>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
-<p>/debugscanner auto start [-start {block number}] [-interval {ticks}] [-pitch {pitch}] [-yaw {yaw}] [player]</p>
-</div>
-</li>
-<li>
-<p>To stop early use the following command:</p>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
-<p>/debugscanner auto stop [player]</p>
-</div>
-</li>
 </ol>
+<h3 id="auto-scanner">Auto Scanner<a class="headerlink" href="#auto-scanner" title="Permanent link">¶</a></h3>
+<p>The auto scanner will teleport the player to every block in the debug world in sequence, showing the block state and block number
+in an actionbar message</p>
+<p>To start:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">!!!</span><span class="w"> </span><span class="n">example</span><span class="w"></span>
+<span class="w">    </span><span class="o">/</span><span class="n">debugscanner</span><span class="w"> </span><span class="n">auto</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="o">[</span><span class="n">-start {block number}</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-interval {ticks}</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-pitch {pitch}</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-yaw {yaw}</span><span class="o">]</span><span class="w"> </span>
+<span class="w">        </span><span class="o">[</span><span class="n">-direction {north|south|east|west|all}</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">player</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>To stop:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">!!!</span><span class="w"> </span><span class="n">example</span><span class="w"></span>
+<span class="w">    </span><span class="o">/</span><span class="n">debugscanner</span><span class="w"> </span><span class="n">auto</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="o">[</span><span class="n">player</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
 <h2 id="detector-mode">Detector Mode<a class="headerlink" href="#detector-mode" title="Permanent link">¶</a></h2>
-<p>Detector mode will show what debug block a player is looking at.</p>
+<p>Detector mode will show what debug block a player is looking at as well as the block number in an action bar message.</p>
 <p>To start:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">!!! example</span>
@@ -242,11 +273,22 @@ or copy a level.dat from a non debug world (note if you do this you'll need to s
 <span class="err">    /debugscanner detect stop</span>
 </code></pre></div>
 </td></tr></table>
+<h2 id="watcher-mode">Watcher Mode<a class="headerlink" href="#watcher-mode" title="Permanent link">¶</a></h2>
+<p>Watcher mode is a workaround for Bedrock not having proper spectator mode. It will make a player view everything another
+player is doing and make both players invisible to each other.  Used with Scan mode or Detect mode will allow simultaneous
+viewing of blocks by multiple players running different editions of minecraft.</p>
+<p>To start:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="o">!!!</span> <span class="n">example</span>
+    <span class="o">/</span><span class="n">debugscanner</span> <span class="n">watch</span> <span class="p">{</span><span class="n">player</span> <span class="n">to</span> <span class="n">watch</span><span class="p">}</span> <span class="p">[</span><span class="n">watching</span> <span class="n">player</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<p>To stop, press <code>sneak</code>.</p>
 <hr/>
 <div class="md-source-date">
 <small>
     
-      Last update: <span class="timeago" datetime="1590108342000" locale="en"></span>
+      Last update: <span class="timeago" datetime="1590224558000" locale="en"></span>
 </small>
 </div>
 </article>
